@@ -3,7 +3,8 @@
 {% block start %}
 
 <div id="signup">
-  <form action="" method="">
+  <form action="" method="POST">
+    {% csrf_token %}
     <h3 id="heading">Please Sign Up</h3>
     <br>  
     <input type="email" class="input-control" placeholder="please enter email" name="email">
