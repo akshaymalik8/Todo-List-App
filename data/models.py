@@ -26,3 +26,4 @@ class task(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     priority = models.CharField(max_length=2, choices=priority_choice)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
