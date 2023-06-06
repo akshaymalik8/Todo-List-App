@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login as login_user,logout
 
 # Create your views here.
 def home_page(request):
@@ -28,7 +28,7 @@ def login(request):
         password=request.POST.get('password')
         user = authenticate(email=email, password=password)
         if user is not None:
-            login(request,user)
+            login_user(request,user)
             return render(request, 'home.html')
         else:
             return HttpResponse('something is wrong with your email and password')
