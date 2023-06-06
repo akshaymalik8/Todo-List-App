@@ -1,6 +1,7 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login as login_user,logout
+from django.contrib.auth import authenticate,login,logout
+
 
 # Create your views here.
 def home_page(request):
@@ -10,26 +11,29 @@ def home_page(request):
 
 def signup(request):
     if request.method=='POST':
+        name=request.POST.get('name')
         email=request.POST.get('email')
         password=request.POST.get('password')
         password2=request.POST.get('password2')
         if password==password2:
-            my_user = User.objects.create_user(email, password)
+            my_user = User.objects.create_user(name, email, password)
             my_user.save()
-            return render(request, 'index.html')
+            return redirect('login') # Redirect to the 'login' URL pattern
         else:
-            return render()
+            return HttpResponse('Something wrong with your email')
     return render(request, 'signup.html')
 
 
-def login(request):
+def login_page(request):
     if request.method=='POST':
         email=request.POST.get('email')
         password=request.POST.get('password')
-        user = authenticate(email=email, password=password)
+        user = authenticate(request, email=email, password=password)
+
         if user is not None:
-            login_user(request,user)
-            return render(request, 'home.html')
+            login(request, user)
+            return redirect('home') # Redirect to the 'home' URL pattern
         else:
-            return HttpResponse('something is wrong with your email and password')
+            return HttpResponse('Invalid credentials')
+        
     return render(request, 'login.html')

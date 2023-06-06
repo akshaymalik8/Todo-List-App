@@ -6,12 +6,14 @@
   <form action="" method="POST" class="col-lg-5 shadow p-4 mx-auto">
   {% csrf_token %}
     <h3 id="heading">Please Sign Up</h3>
+    <br>
+    <input type="text" name="name" class="form-control" placeholder="Plese enter your name" required>
     <br>  
-    <input type="email" class="form-control" placeholder="please enter email" name="email">
+    <input type="email" class="form-control" placeholder="please enter email" name="email" required>
     <br>
-    <input type="password" class="form-control" placeholder="please enter password" name="password">
+    <input type="password" class="form-control" placeholder="please enter password" name="password" required>
     <br>
-    <input type="password" class="form-control" placeholder="please enter password again" name="password2">
+    <input type="password" class="form-control" placeholder="please enter password again" name="password2" required>
     <br>
     <button class="btn btn-primary">Sign Up</button>
   </form>

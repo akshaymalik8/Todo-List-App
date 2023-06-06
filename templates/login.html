@@ -7,9 +7,9 @@
   {% csrf_token %}
     <h3 id="heading">Please Log In</h3>
     <br>  
-    <input type="email" class="form-control" placeholder="please enter email" name="email">
+    <input type="email" class="form-control" placeholder="please enter email" name="email" required>
     <br>
-    <input type="password" class="form-control" placeholder="please enter password" name="password">
+    <input type="password" class="form-control" placeholder="please enter password" name="password" required>
     <br>
     <button class="btn btn-primary">Login</button>
   </form>
