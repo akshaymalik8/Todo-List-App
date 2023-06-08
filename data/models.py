@@ -22,7 +22,6 @@ class task(models.Model):
         ('7', '7'),
         ('8', '8'),
         ('9', '9'),
-        ('10', '10'),
     ]
 
     title = models.CharField(max_length=50)
@@ -35,10 +34,3 @@ class task(models.Model):
     def __str__(self):
         return self.title
     
-# class task_data(models.Model):
-#     title = models.CharField(max_length=50)
-#     status = models.CharField(max_length=10)
-#     date = models.DateTimeField(auto_now_add=True)
-#     priority = models.CharField(max_length=20)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     description = models.TextField()

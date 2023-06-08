@@ -3,16 +3,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from data.models import *
 from django.contrib.auth.decorators import login_required
-from data.forms import TodoForm
+from data.forms import TaskForm
 
 
 # Create your views here.
+
+
 @login_required(login_url='login')
 def home_page(request):
-    form = TodoForm()
-    tasks = task.object.all()
+    if request.user.is_authenticated:
+        user = request.user
+        form = TaskForm()
+        tasks = task.objects.filter(user = user).order_by('priority')
 
-    return render(request, 'index.html', context={'form' : form})
+    return render(request, 'index.html', context={'form' : form, 'tasks' : tasks})
 
 
 def signup(request):
@@ -47,15 +51,6 @@ def login_page(request):
     return render(request, 'login.html')
 
 
-# def savetask(request):
-#     if request.method=='POST':
-#         title = request.POST.get('title')
-#         status = request.POST.get('status')
-#         priority = request.POST.get('priority')
-#         description = request.POST.get('description')
-#         dt = task(title=title, status=status, priority=priority, description=description,)
-#         dt.save()
-#     return render(request, 'index.html')
 
 def logout_page(request):
     logout(request)
@@ -65,9 +60,21 @@ def add_todo(request):
     if request.user.is_authenticated:
         user = request.user
         print(user)
-        form = TodoForm(request.POST)
+        form = TaskForm(request.POST)
         if form.is_valid:
             todo = form.save(commit=False)
             todo.user =user
             todo.save()
             return redirect('home')
+        
+
+def delete_task(request, id):
+    task.objects.get(pk = id).delete()
+    return redirect('home')
+
+
+def change_task(request, id, status):
+    tsk = task.objects.get(pk = id)
+    tsk.status = status
+    tsk.save()
+    return redirect('home')
